@@ -9,12 +9,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import model.entities.Department;
 
 public class DepartmentFormController implements Initializable {
 
-	@Override
-	public void initialize(URL url, ResourceBundle rb) {		
-	}
+	private Department entity;
 	
 	@FXML
 	private TextField txtId;
@@ -22,29 +21,44 @@ public class DepartmentFormController implements Initializable {
 	@FXML
 	private TextField txtName;
 	
-	@FXML 
+	@FXML
 	private Label labelErrorName;
 	
-	@FXML 
+	@FXML
 	private Button btSave;
 	
-	@FXML 
+	@FXML
 	private Button btCancel;
 	
-	@FXML 
-	public void onBtSaveAction() {
-		System.out.println("SAVE");
+	public void setDepartment(Department entity) {
+		this.entity = entity;
 	}
 	
-	@FXML 
+	@FXML
+	public void onBtSaveAction() {
+		System.out.println("onBtSaveAction");
+	}
+	
+	@FXML
 	public void onBtCancelAction() {
-		System.out.println("Cancel");
+		System.out.println("onBtCancelAction");
+	}
+	
+	@Override
+	public void initialize(URL url, ResourceBundle rb) {
+		initializeNodes();
 	}
 	
 	private void initializeNodes() {
 		Constraints.setTextFieldInteger(txtId);
-		Constraints.setTextFieldMaxLength(txtId, 30);
-		
+		Constraints.setTextFieldMaxLength(txtName, 30);
 	}
 	
+	public void updateFormData() {
+		if (entity == null) {
+			throw new IllegalStateException("Entity was null");
+		}
+		txtId.setText(String.valueOf(entity.getId()));
+		txtName.setText(entity.getName());
+	}
 }
