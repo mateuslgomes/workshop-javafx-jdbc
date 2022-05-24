@@ -27,6 +27,10 @@ public class DepartmentFormController implements Initializable {
 
 	private Department entity;
 	
+	private DepartmentService service;
+	
+	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
+	
 	@FXML
 	private TextField txtId;
 	
@@ -46,20 +50,20 @@ public class DepartmentFormController implements Initializable {
 		this.entity = entity;
 	}
 	
-	private DepartmentService service;
-	
 	public void setDepartmentService(DepartmentService service) {
 		this.service = service;
 	}
 	
-	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
+	public void subscribeDataChangeListener(DataChangeListener listener) {
+		dataChangeListeners.add(listener);
+	}
 	
 	@FXML
 	public void onBtSaveAction(ActionEvent event) {
 		if (entity == null) {
 			throw new IllegalStateException("Entity was null");
 		}
-		if (service == null	) {
+		if (service == null) {
 			throw new IllegalStateException("Service was null");
 		}
 		try {
@@ -74,7 +78,6 @@ public class DepartmentFormController implements Initializable {
 		catch (DbException e) {
 			Alerts.showAlert("Error saving object", null, e.getMessage(), AlertType.ERROR);
 		}
-
 	}
 	
 	private void notifyDataChangeListeners() {
@@ -83,10 +86,6 @@ public class DepartmentFormController implements Initializable {
 		}
 	}
 
-	public void subscribeDataChangeListener(DataChangeListener listers) {
-		dataChangeListeners.add(listers);
-	}
-	
 	private Department getFormData() {
 		Department obj = new Department();
 		
@@ -94,8 +93,8 @@ public class DepartmentFormController implements Initializable {
 		
 		obj.setId(Utils.tryParseToInt(txtId.getText()));
 		
-		if (txtName.getText() == null || txtName.getText().trim().equals("") ) {
-			exception.addErrors("name", "Field can't be empty");
+		if (txtName.getText() == null || txtName.getText().trim().equals("")) {
+			exception.addError("name", "Field can't be empty");
 		}
 		obj.setName(txtName.getText());
 		
@@ -104,14 +103,6 @@ public class DepartmentFormController implements Initializable {
 		}
 		
 		return obj;
-	}
-	
-	private void setErrorMessages(Map<String, String> errors) {
-		Set<String> fields = errors.keySet();
-		
-		if (fields.contains("name")) {
-			labelErrorName.setText(errors.get("name"));
-		}
 	}
 
 	@FXML
@@ -135,5 +126,13 @@ public class DepartmentFormController implements Initializable {
 		}
 		txtId.setText(String.valueOf(entity.getId()));
 		txtName.setText(entity.getName());
+	}
+	
+	private void setErrorMessages(Map<String, String> errors) {
+		Set<String> fields = errors.keySet();
+		
+		if (fields.contains("name")) {
+			labelErrorName.setText(errors.get("name"));
+		}
 	}
 }
