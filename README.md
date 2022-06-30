@@ -2,8 +2,10 @@
 
 # PROJETO WORKSHOP-JAVAFX-JDBC
 ### 
+### Na interface podemos ver as opções de ajuda, vendedor e departamentos. 
 ![image](https://user-images.githubusercontent.com/97681752/170600729-37974e1b-60e4-44b5-9207-0e7baf2874d1.png)
 
+### 
 ![image](https://user-images.githubusercontent.com/97681752/170601286-72ac5de7-dc1c-4025-afbd-d670578b33be.png)
 
 ![image](https://user-images.githubusercontent.com/97681752/170601453-b07470a9-814e-4dbb-92a4-42a58dd84e51.png)
