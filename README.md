@@ -1,5 +1,3 @@
-# 🚧 PROJETO EM CONSTRUÇÃO 🚧 
-
 # PROJETO WORKSHOP-JAVAFX-JDBC
 ### 
 ### Na interface podemos ver as opções de ajuda, vendedor e departamentos. 
